@@ -2,7 +2,7 @@ pipeline {
   agent any
 
   environment {
-    SONARQUBE_SERVER = 'SonarQubeLocal' // Must match the SonarQube server name in Jenkins
+    SONARQUBE_SERVER = 'SonarQubeLocal' // Name must match Jenkins Global Tool Configuration
   }
 
   stages {
@@ -39,7 +39,10 @@ pipeline {
     stage('Static Code Analysis - SonarQube') {
       steps {
         withSonarQubeEnv("${SONARQUBE_SERVER}") {
-          tool name: 'SonarScannerLocal', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
+          script {
+            def scannerHome = tool name: 'SonarScannerLocal', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
+            env.PATH = "${scannerHome}/bin:${env.PATH}"
+          }
           sh 'sonar-scanner'
         }
       }
