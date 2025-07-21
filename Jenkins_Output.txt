@@ -1,0 +1,515 @@
+Started by user Idah Makena Ncooro
+Obtained Jenkinsfile from git https://github.com/imakena2/DevSecops_Project.git
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in C:\ProgramData\Jenkins\.jenkins\workspace\DevSecOps_Project
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+No credentials specified
+ > C:\Program Files\Git\bin\git.exe rev-parse --resolve-git-dir C:\ProgramData\Jenkins\.jenkins\workspace\DevSecOps_Project\.git # timeout=10
+Fetching changes from the remote Git repository
+ > C:\Program Files\Git\bin\git.exe config remote.origin.url https://github.com/imakena2/DevSecops_Project.git # timeout=10
+Fetching upstream changes from https://github.com/imakena2/DevSecops_Project.git
+ > C:\Program Files\Git\bin\git.exe --version # timeout=10
+ > git --version # 'git version 2.48.1.windows.1'
+ > C:\Program Files\Git\bin\git.exe fetch --tags --force --progress -- https://github.com/imakena2/DevSecops_Project.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > C:\Program Files\Git\bin\git.exe rev-parse "refs/remotes/origin/main^{commit}" # timeout=10
+Checking out Revision 37bf25382989c6ff3e195509c48553d5f97eabfe (refs/remotes/origin/main)
+ > C:\Program Files\Git\bin\git.exe config core.sparsecheckout # timeout=10
+ > C:\Program Files\Git\bin\git.exe checkout -f 37bf25382989c6ff3e195509c48553d5f97eabfe # timeout=10
+Commit message: "Add Dockerfile"
+ > C:\Program Files\Git\bin\git.exe rev-list --no-walk c88461bd97bba4664a01342758aa90d9491794d8 # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Clone Code)
+[Pipeline] git
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+No credentials specified
+ > C:\Program Files\Git\bin\git.exe rev-parse --resolve-git-dir C:\ProgramData\Jenkins\.jenkins\workspace\DevSecOps_Project\.git # timeout=10
+Fetching changes from the remote Git repository
+ > C:\Program Files\Git\bin\git.exe config remote.origin.url https://github.com/imakena2/DevSecops_Project.git # timeout=10
+Fetching upstream changes from https://github.com/imakena2/DevSecops_Project.git
+ > C:\Program Files\Git\bin\git.exe --version # timeout=10
+ > git --version # 'git version 2.48.1.windows.1'
+ > C:\Program Files\Git\bin\git.exe fetch --tags --force --progress -- https://github.com/imakena2/DevSecops_Project.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > C:\Program Files\Git\bin\git.exe rev-parse "refs/remotes/origin/main^{commit}" # timeout=10
+Checking out Revision 37bf25382989c6ff3e195509c48553d5f97eabfe (refs/remotes/origin/main)
+ > C:\Program Files\Git\bin\git.exe config core.sparsecheckout # timeout=10
+ > C:\Program Files\Git\bin\git.exe checkout -f 37bf25382989c6ff3e195509c48553d5f97eabfe # timeout=10
+ > C:\Program Files\Git\bin\git.exe branch -a -v --no-abbrev # timeout=10
+ > C:\Program Files\Git\bin\git.exe branch -D main # timeout=10
+ > C:\Program Files\Git\bin\git.exe checkout -b main 37bf25382989c6ff3e195509c48553d5f97eabfe # timeout=10
+Commit message: "Add Dockerfile"
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Install Dependencies)
+[Pipeline] sh
++ npm install
+
+up to date, audited 409 packages in 11s
+
+83 packages are looking for funding
+  run `npm fund` for details
+
+3 moderate severity vulnerabilities
+
+Some issues need review, and may require choosing
+a different dependency.
+
+Run `npm audit` for details.
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build App)
+[Pipeline] sh
++ npm run build
+
+> vite_react_shadcn_ts@0.0.0 build
+> vite build
+
+[36mvite v5.4.19 [32mbuilding for production...[36m[39m
+transforming...
+[32m✓[39m 1685 modules transformed.
+rendering chunks...
+computing gzip size...
+[2mdist/[22m[32mindex.html                   [39m[1m[2m  1.15 kB[22m[1m[22m[2m │ gzip:   0.60 kB[22m
+[2mdist/[22m[32massets/favicon-CYSUwyc9.ico  [39m[1m[2m 15.41 kB[22m[1m[22m
+[2mdist/[22m[35massets/index-DODUwqfF.css    [39m[1m[2m 68.64 kB[22m[1m[22m[2m │ gzip:  11.76 kB[22m
+[2mdist/[22m[36massets/index-DVfOEpuB.js     [39m[1m[2m372.47 kB[22m[1m[22m[2m │ gzip: 116.56 kB[22m
+[32m✓ built in 15.61s[39m
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Run Tests)
+[Pipeline] sh
++ npm test
+npm error Missing script: "test"
+npm error
+npm error To see a list of scripts, run:
+npm error   npm run
+npm error A complete log of this run can be found in: C:\WINDOWS\system32\config\systemprofile\AppData\Local\npm-cache\_logs\2025-07-21T13_02_58_139Z-debug-0.log
++ echo 'No tests yet'
+No tests yet
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Docker Build)
+[Pipeline] sh
++ docker build -t devsecops-nginx .
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 636B 0.1s done
+#1 DONE 0.5s
+
+#2 [internal] load metadata for docker.io/library/nginx:alpine
+#2 ...
+
+#3 [internal] load metadata for docker.io/library/node:18-alpine
+#3 ...
+
+#4 [auth] library/node:pull token for registry-1.docker.io
+#4 DONE 0.0s
+
+#5 [auth] library/nginx:pull token for registry-1.docker.io
+#5 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/nginx:alpine
+#2 ...
+
+#3 [internal] load metadata for docker.io/library/node:18-alpine
+#3 DONE 42.2s
+
+#2 [internal] load metadata for docker.io/library/nginx:alpine
+#2 DONE 42.7s
+
+#6 [internal] load .dockerignore
+#6 transferring context:
+#6 transferring context: 2B 0.0s done
+#6 DONE 1.3s
+
+#7 [internal] load build context
+#7 DONE 0.0s
+
+#8 [stage-1 1/3] FROM docker.io/library/nginx:alpine@sha256:d67ea0d64d518b1bb04acde3b00f722ac3e9764b3209a9b0a98924ba35e4b779
+#8 resolve docker.io/library/nginx:alpine@sha256:d67ea0d64d518b1bb04acde3b00f722ac3e9764b3209a9b0a98924ba35e4b779
+#8 resolve docker.io/library/nginx:alpine@sha256:d67ea0d64d518b1bb04acde3b00f722ac3e9764b3209a9b0a98924ba35e4b779 1.3s done
+#8 DONE 1.5s
+
+#9 [builder 1/6] FROM docker.io/library/node:18-alpine@sha256:8d6421d663b4c28fd3ebc498332f249011d118945588d0a35cb9bc4b8ca09d9e
+#9 resolve docker.io/library/node:18-alpine@sha256:8d6421d663b4c28fd3ebc498332f249011d118945588d0a35cb9bc4b8ca09d9e
+#9 resolve docker.io/library/node:18-alpine@sha256:8d6421d663b4c28fd3ebc498332f249011d118945588d0a35cb9bc4b8ca09d9e 1.3s done
+#9 ...
+
+#7 [internal] load build context
+#7 transferring context: 78.29kB 2.0s
+#7 transferring context: 843.48kB 7.2s
+#7 ...
+
+#8 [stage-1 1/3] FROM docker.io/library/nginx:alpine@sha256:d67ea0d64d518b1bb04acde3b00f722ac3e9764b3209a9b0a98924ba35e4b779
+#8 ...
+
+#7 [internal] load build context
+#7 transferring context: 1.54MB 12.2s
+#7 ...
+
+#9 [builder 1/6] FROM docker.io/library/node:18-alpine@sha256:8d6421d663b4c28fd3ebc498332f249011d118945588d0a35cb9bc4b8ca09d9e
+#9 DONE 17.0s
+
+#7 [internal] load build context
+#7 transferring context: 3.66MB 17.3s
+#7 ...
+
+#9 [builder 1/6] FROM docker.io/library/node:18-alpine@sha256:8d6421d663b4c28fd3ebc498332f249011d118945588d0a35cb9bc4b8ca09d9e
+#9 sha256:25ff2da83641908f65c3a74d80409d6b1b62ccfaab220b9ea70b80df5a2e0549 0B / 446B 4.6s
+#9 sha256:dd71dde834b5c203d162902e6b8994cb2309ae049a0eabc4efea161b2b5a3d0e 0B / 40.01MB 4.1s
+#9 sha256:1e5a4c89cee5c0826c540ab06d4b6b491c96eda01837f430bd47f0d26702d6e3 0B / 1.26MB 3.8s
+#9 sha256:25ff2da83641908f65c3a74d80409d6b1b62ccfaab220b9ea70b80df5a2e0549 446B / 446B 7.0s
+#9 sha256:25ff2da83641908f65c3a74d80409d6b1b62ccfaab220b9ea70b80df5a2e0549 446B / 446B 8.3s done
+#9 sha256:dd71dde834b5c203d162902e6b8994cb2309ae049a0eabc4efea161b2b5a3d0e 1.05MB / 40.01MB 9.2s
+#9 sha256:1e5a4c89cee5c0826c540ab06d4b6b491c96eda01837f430bd47f0d26702d6e3 0B / 1.26MB 8.9s
+#9 sha256:1e5a4c89cee5c0826c540ab06d4b6b491c96eda01837f430bd47f0d26702d6e3 1.05MB / 1.26MB 9.2s
+#9 ...
+
+#8 [stage-1 1/3] FROM docker.io/library/nginx:alpine@sha256:d67ea0d64d518b1bb04acde3b00f722ac3e9764b3209a9b0a98924ba35e4b779
+#8 DONE 29.7s
+
+#9 [builder 1/6] FROM docker.io/library/node:18-alpine@sha256:8d6421d663b4c28fd3ebc498332f249011d118945588d0a35cb9bc4b8ca09d9e
+#9 ...
+
+#7 [internal] load build context
+#7 transferring context: 4.19MB 25.2s
+#7 ...
+
+#9 [builder 1/6] FROM docker.io/library/node:18-alpine@sha256:8d6421d663b4c28fd3ebc498332f249011d118945588d0a35cb9bc4b8ca09d9e
+#9 sha256:dd71dde834b5c203d162902e6b8994cb2309ae049a0eabc4efea161b2b5a3d0e 7.34MB / 40.01MB 12.8s
+#9 sha256:1e5a4c89cee5c0826c540ab06d4b6b491c96eda01837f430bd47f0d26702d6e3 1.26MB / 1.26MB 10.5s done
+#9 sha256:dd71dde834b5c203d162902e6b8994cb2309ae049a0eabc4efea161b2b5a3d0e 9.44MB / 40.01MB 13.7s
+#9 sha256:dd71dde834b5c203d162902e6b8994cb2309ae049a0eabc4efea161b2b5a3d0e 11.53MB / 40.01MB 14.3s
+#9 sha256:dd71dde834b5c203d162902e6b8994cb2309ae049a0eabc4efea161b2b5a3d0e 13.63MB / 40.01MB 15.1s
+#9 sha256:dd71dde834b5c203d162902e6b8994cb2309ae049a0eabc4efea161b2b5a3d0e 15.73MB / 40.01MB 16.3s
+#9 ...
+
+#8 [stage-1 1/3] FROM docker.io/library/nginx:alpine@sha256:d67ea0d64d518b1bb04acde3b00f722ac3e9764b3209a9b0a98924ba35e4b779
+#8 sha256:f23865b38cc69ad61d7a272610d411a4e66c2ed6ab2f374ff8e7f947ecfffb28 3.15MB / 16.78MB 5.1s
+#8 sha256:bdaad27fd04a102fe15f473a31a82321c0625a6a3603bd9522bf058eb8a194e2 1.40kB / 1.40kB 3.3s
+#8 sha256:828fa206d77bc99972844d67b1a617a841c74f15e71c71e656d1437bd26c15b8 1.21kB / 1.21kB 2.6s
+#8 ...
+
+#9 [builder 1/6] FROM docker.io/library/node:18-alpine@sha256:8d6421d663b4c28fd3ebc498332f249011d118945588d0a35cb9bc4b8ca09d9e
+#9 sha256:dd71dde834b5c203d162902e6b8994cb2309ae049a0eabc4efea161b2b5a3d0e 17.83MB / 40.01MB 17.5s
+#9 sha256:dd71dde834b5c203d162902e6b8994cb2309ae049a0eabc4efea161b2b5a3d0e 19.92MB / 40.01MB 19.1s
+#9 sha256:dd71dde834b5c203d162902e6b8994cb2309ae049a0eabc4efea161b2b5a3d0e 22.02MB / 40.01MB 20.3s
+#9 sha256:dd71dde834b5c203d162902e6b8994cb2309ae049a0eabc4efea161b2b5a3d0e 24.12MB / 40.01MB 21.7s
+#9 ...
+
+#7 [internal] load build context
+#7 transferring context: 12.90MB 38.2s
+#7 ...
+
+#8 [stage-1 1/3] FROM docker.io/library/nginx:alpine@sha256:d67ea0d64d518b1bb04acde3b00f722ac3e9764b3209a9b0a98924ba35e4b779
+#8 sha256:f23865b38cc69ad61d7a272610d411a4e66c2ed6ab2f374ff8e7f947ecfffb28 8.39MB / 16.78MB 10.7s
+#8 sha256:bdaad27fd04a102fe15f473a31a82321c0625a6a3603bd9522bf058eb8a194e2 1.40kB / 1.40kB 5.3s done
+#8 sha256:828fa206d77bc99972844d67b1a617a841c74f15e71c71e656d1437bd26c15b8 1.21kB / 1.21kB 5.4s done
+#8 sha256:c1d2dc189e3831ffcb9a19138df97d141f3bd13a13a1513b137cc7ca6e94fa09 405B / 405B 2.2s done
+#8 sha256:958a74d6a238e799e7819c7408602b9c5481fa5eda0ee5bcbe1932f685d9d3b9 956B / 956B 2.6s
+#8 sha256:fd372c3c84a23422bc07489867f8c2e7e99774680380ccf89c0a269b71b5690f 0B / 628B 1.1s
+#8 sha256:f23865b38cc69ad61d7a272610d411a4e66c2ed6ab2f374ff8e7f947ecfffb28 9.44MB / 16.78MB 10.8s
+#8 sha256:fd372c3c84a23422bc07489867f8c2e7e99774680380ccf89c0a269b71b5690f 628B / 628B 1.4s
+#8 sha256:f23865b38cc69ad61d7a272610d411a4e66c2ed6ab2f374ff8e7f947ecfffb28 10.49MB / 16.78MB 11.4s
+#8 sha256:f23865b38cc69ad61d7a272610d411a4e66c2ed6ab2f374ff8e7f947ecfffb28 11.53MB / 16.78MB 11.6s
+#8 sha256:f23865b38cc69ad61d7a272610d411a4e66c2ed6ab2f374ff8e7f947ecfffb28 12.58MB / 16.78MB 11.9s
+#8 sha256:958a74d6a238e799e7819c7408602b9c5481fa5eda0ee5bcbe1932f685d9d3b9 956B / 956B 3.4s done
+#8 sha256:f23865b38cc69ad61d7a272610d411a4e66c2ed6ab2f374ff8e7f947ecfffb28 13.63MB / 16.78MB 12.0s
+#8 sha256:a5585638209eba93a3af07035d353e512187e9884e402ded45565e264bedb7e1 0B / 1.81MB 0.2s
+#8 sha256:f23865b38cc69ad61d7a272610d411a4e66c2ed6ab2f374ff8e7f947ecfffb28 14.68MB / 16.78MB 14.0s
+#8 sha256:fd372c3c84a23422bc07489867f8c2e7e99774680380ccf89c0a269b71b5690f 628B / 628B 3.6s done
+#8 sha256:9824c27679d3b27c5e1cb00a73adb6f4f8d556994111c12db3c5d61a0c843df8 0B / 3.80MB 0.3s
+#8 sha256:a5585638209eba93a3af07035d353e512187e9884e402ded45565e264bedb7e1 1.05MB / 1.81MB 2.6s
+#8 sha256:f23865b38cc69ad61d7a272610d411a4e66c2ed6ab2f374ff8e7f947ecfffb28 15.73MB / 16.78MB 15.5s
+#8 sha256:a5585638209eba93a3af07035d353e512187e9884e402ded45565e264bedb7e1 1.81MB / 1.81MB 3.8s
+#8 sha256:f23865b38cc69ad61d7a272610d411a4e66c2ed6ab2f374ff8e7f947ecfffb28 16.78MB / 16.78MB 15.8s
+#8 sha256:9824c27679d3b27c5e1cb00a73adb6f4f8d556994111c12db3c5d61a0c843df8 1.05MB / 3.80MB 3.3s
+#8 sha256:9824c27679d3b27c5e1cb00a73adb6f4f8d556994111c12db3c5d61a0c843df8 2.10MB / 3.80MB 3.6s
+#8 sha256:a5585638209eba93a3af07035d353e512187e9884e402ded45565e264bedb7e1 1.81MB / 1.81MB 5.0s done
+#8 sha256:9824c27679d3b27c5e1cb00a73adb6f4f8d556994111c12db3c5d61a0c843df8 3.80MB / 3.80MB 7.2s
+#8 ...
+
+#9 [builder 1/6] FROM docker.io/library/node:18-alpine@sha256:8d6421d663b4c28fd3ebc498332f249011d118945588d0a35cb9bc4b8ca09d9e
+#9 sha256:dd71dde834b5c203d162902e6b8994cb2309ae049a0eabc4efea161b2b5a3d0e 37.75MB / 40.01MB 33.1s
+#9 ...
+
+#7 [internal] load build context
+#7 transferring context: 19.35MB 48.6s
+#7 ...
+
+#9 [builder 1/6] FROM docker.io/library/node:18-alpine@sha256:8d6421d663b4c28fd3ebc498332f249011d118945588d0a35cb9bc4b8ca09d9e
+#9 sha256:dd71dde834b5c203d162902e6b8994cb2309ae049a0eabc4efea161b2b5a3d0e 40.01MB / 40.01MB 33.7s
+#9 ...
+
+#8 [stage-1 1/3] FROM docker.io/library/nginx:alpine@sha256:d67ea0d64d518b1bb04acde3b00f722ac3e9764b3209a9b0a98924ba35e4b779
+#8 sha256:9824c27679d3b27c5e1cb00a73adb6f4f8d556994111c12db3c5d61a0c843df8 3.80MB / 3.80MB 8.3s done
+#8 DONE 54.3s
+
+#9 [builder 1/6] FROM docker.io/library/node:18-alpine@sha256:8d6421d663b4c28fd3ebc498332f249011d118945588d0a35cb9bc4b8ca09d9e
+#9 sha256:dd71dde834b5c203d162902e6b8994cb2309ae049a0eabc4efea161b2b5a3d0e 40.01MB / 40.01MB 35.9s done
+#9 DONE 55.5s
+
+#7 [internal] load build context
+#7 transferring context: 20.39MB 53.7s
+#7 ...
+
+#8 [stage-1 1/3] FROM docker.io/library/nginx:alpine@sha256:d67ea0d64d518b1bb04acde3b00f722ac3e9764b3209a9b0a98924ba35e4b779
+#8 extracting sha256:9824c27679d3b27c5e1cb00a73adb6f4f8d556994111c12db3c5d61a0c843df8
+#8 extracting sha256:9824c27679d3b27c5e1cb00a73adb6f4f8d556994111c12db3c5d61a0c843df8 4.3s done
+#8 DONE 58.5s
+
+#7 [internal] load build context
+#7 transferring context: 20.59MB 60.5s
+#7 ...
+
+#8 [stage-1 1/3] FROM docker.io/library/nginx:alpine@sha256:d67ea0d64d518b1bb04acde3b00f722ac3e9764b3209a9b0a98924ba35e4b779
+#8 extracting sha256:a5585638209eba93a3af07035d353e512187e9884e402ded45565e264bedb7e1 4.2s done
+#8 DONE 62.7s
+
+#9 [builder 1/6] FROM docker.io/library/node:18-alpine@sha256:8d6421d663b4c28fd3ebc498332f249011d118945588d0a35cb9bc4b8ca09d9e
+#9 extracting sha256:dd71dde834b5c203d162902e6b8994cb2309ae049a0eabc4efea161b2b5a3d0e
+#9 ...
+
+#7 [internal] load build context
+#7 transferring context: 20.73MB 65.6s
+#7 ...
+
+#8 [stage-1 1/3] FROM docker.io/library/nginx:alpine@sha256:d67ea0d64d518b1bb04acde3b00f722ac3e9764b3209a9b0a98924ba35e4b779
+#8 extracting sha256:fd372c3c84a23422bc07489867f8c2e7e99774680380ccf89c0a269b71b5690f 1.9s done
+#8 DONE 64.7s
+
+#7 [internal] load build context
+#7 transferring context: 20.98MB 70.6s
+#7 ...
+
+#8 [stage-1 1/3] FROM docker.io/library/nginx:alpine@sha256:d67ea0d64d518b1bb04acde3b00f722ac3e9764b3209a9b0a98924ba35e4b779
+#8 extracting sha256:958a74d6a238e799e7819c7408602b9c5481fa5eda0ee5bcbe1932f685d9d3b9 1.0s done
+#8 extracting sha256:c1d2dc189e3831ffcb9a19138df97d141f3bd13a13a1513b137cc7ca6e94fa09 1.6s done
+#8 extracting sha256:828fa206d77bc99972844d67b1a617a841c74f15e71c71e656d1437bd26c15b8 1.3s done
+#8 extracting sha256:bdaad27fd04a102fe15f473a31a82321c0625a6a3603bd9522bf058eb8a194e2 1.9s done
+#8 DONE 70.5s
+
+#8 [stage-1 1/3] FROM docker.io/library/nginx:alpine@sha256:d67ea0d64d518b1bb04acde3b00f722ac3e9764b3209a9b0a98924ba35e4b779
+#8 extracting sha256:f23865b38cc69ad61d7a272610d411a4e66c2ed6ab2f374ff8e7f947ecfffb28
+#8 ...
+
+#7 [internal] load build context
+#7 transferring context: 21.54MB 78.0s
+#7 ...
+
+#8 [stage-1 1/3] FROM docker.io/library/nginx:alpine@sha256:d67ea0d64d518b1bb04acde3b00f722ac3e9764b3209a9b0a98924ba35e4b779
+#8 extracting sha256:f23865b38cc69ad61d7a272610d411a4e66c2ed6ab2f374ff8e7f947ecfffb28 9.0s done
+#8 DONE 79.5s
+
+#7 [internal] load build context
+#7 transferring context: 21.68MB 83.1s
+#7 ...
+
+#9 [builder 1/6] FROM docker.io/library/node:18-alpine@sha256:8d6421d663b4c28fd3ebc498332f249011d118945588d0a35cb9bc4b8ca09d9e
+#9 extracting sha256:dd71dde834b5c203d162902e6b8994cb2309ae049a0eabc4efea161b2b5a3d0e 28.9s done
+#9 DONE 84.4s
+
+#7 [internal] load build context
+#7 transferring context: 21.81MB 88.1s
+#7 ...
+
+#9 [builder 1/6] FROM docker.io/library/node:18-alpine@sha256:8d6421d663b4c28fd3ebc498332f249011d118945588d0a35cb9bc4b8ca09d9e
+#9 extracting sha256:1e5a4c89cee5c0826c540ab06d4b6b491c96eda01837f430bd47f0d26702d6e3 1.5s done
+#9 extracting sha256:25ff2da83641908f65c3a74d80409d6b1b62ccfaab220b9ea70b80df5a2e0549 2.1s done
+#9 DONE 88.1s
+
+#7 [internal] load build context
+#7 ...
+
+#10 [stage-1 2/3] RUN rm -rf /usr/share/nginx/html/*
+#10 ...
+
+#7 [internal] load build context
+#7 transferring context: 22.16MB 93.4s
+#7 transferring context: 22.40MB 98.4s
+#7 ...
+
+#11 [builder 2/6] WORKDIR /app
+#11 ...
+
+#7 [internal] load build context
+#7 transferring context: 22.65MB 103.5s
+#7 ...
+
+#11 [builder 2/6] WORKDIR /app
+#11 DONE 17.1s
+
+#7 [internal] load build context
+#7 transferring context: 22.98MB 108.6s
+#7 transferring context: 23.64MB 113.7s
+#7 transferring context: 24.45MB 118.8s
+#7 transferring context: 25.06MB 123.9s
+#7 transferring context: 26.07MB 129.0s
+#7 transferring context: 26.39MB 134.1s
+#7 transferring context: 28.97MB 139.3s
+#7 transferring context: 29.91MB 144.4s
+#7 transferring context: 30.66MB 149.5s
+#7 transferring context: 31.10MB 154.6s
+#7 transferring context: 31.53MB 159.9s
+#7 transferring context: 31.63MB 164.9s
+#7 transferring context: 31.77MB 170.0s
+#7 transferring context: 31.94MB 175.1s
+#7 transferring context: 36.02MB 180.3s
+#7 ...
+
+#10 [stage-1 2/3] RUN rm -rf /usr/share/nginx/html/*
+#10 DONE 99.7s
+
+#7 [internal] load build context
+#7 transferring context: 56.50MB 185.4s
+#7 transferring context: 70.83MB 190.6s
+#7 transferring context: 86.90MB 195.7s
+#7 transferring context: 87.97MB 200.7s
+#7 transferring context: 88.54MB 205.8s
+#7 transferring context: 89.76MB 210.8s
+#7 transferring context: 91.59MB 215.9s
+#7 transferring context: 92.72MB 221.0s
+#7 transferring context: 93.41MB 226.1s
+#7 transferring context: 93.83MB 231.1s
+#7 transferring context: 94.26MB 236.4s
+#7 transferring context: 94.91MB 241.8s
+#7 transferring context: 95.77MB 246.8s
+#7 transferring context: 95.81MB 251.8s
+#7 transferring context: 97.28MB 257.7s
+#7 transferring context: 97.49MB 262.7s
+#7 transferring context: 97.89MB 267.8s
+#7 transferring context: 99.61MB 272.8s
+#7 transferring context: 100.55MB 277.8s
+#7 transferring context: 101.49MB 282.9s
+#7 transferring context: 102.18MB 287.9s
+#7 transferring context: 103.84MB 293.0s
+#7 transferring context: 110.59MB 298.0s
+#7 transferring context: 111.85MB 303.1s
+#7 transferring context: 113.26MB 308.2s
+#7 transferring context: 114.73MB 313.2s
+#7 transferring context: 116.30MB 318.3s
+#7 transferring context: 118.43MB 323.3s
+#7 transferring context: 120.02MB 328.3s
+#7 transferring context: 120.66MB 333.4s
+#7 transferring context: 122.20MB 338.4s
+#7 transferring context: 123.76MB 343.6s
+#7 transferring context: 125.44MB 348.7s
+#7 transferring context: 127.26MB 353.8s
+#7 transferring context: 129.58MB 358.8s
+#7 transferring context: 132.77MB 363.9s
+#7 transferring context: 133.19MB 369.0s
+#7 transferring context: 134.07MB 374.0s
+#7 transferring context: 140.17MB 379.1s
+#7 transferring context: 140.76MB 384.1s
+#7 transferring context: 141.42MB 389.2s
+#7 transferring context: 142.25MB 394.4s
+#7 transferring context: 143.25MB 399.4s
+#7 transferring context: 144.05MB 404.5s
+#7 transferring context: 144.88MB 409.6s
+#7 transferring context: 145.49MB 414.7s
+#7 transferring context: 162.09MB 419.7s
+#7 transferring context: 163.61MB 424.7s
+#7 transferring context: 167.10MB 429.8s
+#7 transferring context: 168.78MB 434.8s
+#7 transferring context: 173.17MB 439.9s
+#7 transferring context: 176.27MB 444.9s
+#7 transferring context: 178.50MB 450.0s
+#7 transferring context: 181.71MB 455.0s
+#7 transferring context: 185.61MB 460.1s
+#7 transferring context: 187.18MB 465.2s
+#7 transferring context: 189.78MB 470.2s
+#7 transferring context: 201.54MB 475.5s
+#7 transferring context: 216.18MB 480.7s
+#7 transferring context: 217.57MB 485.8s
+#7 transferring context: 220.73MB 490.9s
+#7 transferring context: 231.81MB 496.0s
+#7 transferring context: 233.64MB 501.0s
+#7 transferring context: 235.95MB 506.1s
+#7 transferring context: 236.25MB 507.7s done
+#7 DONE 511.5s
+
+#12 [builder 3/6] COPY package*.json ./
+#12 DONE 5.8s
+
+#13 [builder 4/6] RUN npm install
+#13 129.7 npm notice
+#13 129.7 npm notice New major version of npm available! 10.8.2 -> 11.4.2
+#13 129.7 npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.4.2
+#13 129.7 npm notice To update run: npm install -g npm@11.4.2
+#13 129.7 npm notice
+#13 130.1 
+#13 130.1 added 410 packages, and audited 411 packages in 2m
+#13 130.1 
+#13 130.1 83 packages are looking for funding
+#13 130.1   run `npm fund` for details
+#13 130.1 
+#13 130.1 3 moderate severity vulnerabilities
+#13 130.1 
+#13 130.1 Some issues need review, and may require choosing
+#13 130.1 a different dependency.
+#13 130.1 
+#13 130.1 Run `npm audit` for details.
+#13 DONE 145.1s
+
+#14 [builder 5/6] COPY . .
+#14 DONE 79.2s
+
+#15 [builder 6/6] RUN npm run build
+#15 6.648 
+#15 6.648 > vite_react_shadcn_ts@0.0.0 build
+#15 6.648 > vite build
+#15 6.648 
+#15 15.49 vite v5.4.19 building for production...
+#15 17.76 transforming...
+#15 30.26 ✓ 1685 modules transformed.
+#15 31.03 rendering chunks...
+#15 31.05 computing gzip size...
+#15 31.67 dist/index.html                     1.15 kB │ gzip:   0.60 kB
+#15 31.67 dist/assets/favicon-CYSUwyc9.ico   15.41 kB
+#15 31.67 dist/assets/index-DODUwqfF.css     68.64 kB │ gzip:  11.76 kB
+#15 31.67 dist/assets/index-DVfOEpuB.js     372.47 kB │ gzip: 116.56 kB
+#15 31.67 ✓ built in 16.10s
+#15 DONE 34.5s
+
+#16 [stage-1 3/3] COPY --from=builder /app/dist /usr/share/nginx/html
+#16 DONE 6.3s
+
+#17 exporting to image
+#17 exporting layers
+#17 exporting layers 13.9s done
+#17 exporting manifest sha256:5f9c2e64800ed12884b1352bfb40e95575a2a9fa685376e4d7752114b7c990c7
+#17 exporting manifest sha256:5f9c2e64800ed12884b1352bfb40e95575a2a9fa685376e4d7752114b7c990c7 0.6s done
+#17 exporting config sha256:3101262955dfc4c69ce3d5fe20d8fbf2b10092d8988c1555f190c6d0f1b69e62
+#17 exporting config sha256:3101262955dfc4c69ce3d5fe20d8fbf2b10092d8988c1555f190c6d0f1b69e62 0.9s done
+#17 exporting attestation manifest sha256:10f6aa4564e10ec32fc0f228e53b6d60c1b1fcd74e48b5c073005226e8884526
+#17 exporting attestation manifest sha256:10f6aa4564e10ec32fc0f228e53b6d60c1b1fcd74e48b5c073005226e8884526 1.6s done
+#17 exporting manifest list sha256:2934cf4e140ba3f694b9aefca367a2c9a0db4a2652fa17f1376f0f44b7c35d2f
+#17 exporting manifest list sha256:2934cf4e140ba3f694b9aefca367a2c9a0db4a2652fa17f1376f0f44b7c35d2f 1.3s done
+#17 naming to docker.io/library/devsecops-nginx:latest
+#17 naming to docker.io/library/devsecops-nginx:latest 0.4s done
+#17 unpacking to docker.io/library/devsecops-nginx:latest
+#17 unpacking to docker.io/library/devsecops-nginx:latest 2.9s done
+#17 DONE 23.8s
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
