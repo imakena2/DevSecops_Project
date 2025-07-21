@@ -2,7 +2,7 @@ pipeline {
   agent any
 
   environment {
-    SONARQUBE_SERVER = 'SonarQubeLocal' // Must match the name configured in Jenkins > Global Tool Configuration
+    SONARQUBE_SERVER = 'SonarQubeLocal' // Must match the name in Jenkins Global Tool Configuration
   }
 
   stages {
@@ -39,6 +39,8 @@ pipeline {
     stage('Static Code Analysis - SonarQube') {
       steps {
         withSonarQubeEnv("${SONARQUBE_SERVER}") {
+          // Use the SonarScanner installed manually and configured in Jenkins
+          tool name: 'SonarScanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
           sh 'sonar-scanner'
         }
       }
