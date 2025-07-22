@@ -2,7 +2,12 @@ pipeline {
   agent any
 
   environment {
-    SONARQUBE_SERVER = 'SonarQubeLocal' // Name must match Jenkins Global Tool Configuration
+    SONAR_TOKEN = 'squ_639d70dfa9637c77f5fbdcc4dfcd3acf5c60d858'
+    SONAR_HOST_URL = 'http://192.168.8.24:9000'
+  }
+
+  tools {
+    nodejs 'NodeJS16' // This is valid
   }
 
   stages {
@@ -30,20 +35,23 @@ pipeline {
       }
     }
 
-    stage('Docker Build') {
+    stage('SonarQube Analysis') {
       steps {
-        sh 'docker build -t devsecops-nginx .'
-      }
-    }
-
-    stage('Static Code Analysis - SonarQube') {
-      steps {
-        withSonarQubeEnv("${SONARQUBE_SERVER}") {
+        withSonarQubeEnv('SonarQubeLocal') {
           script {
             def scannerHome = tool name: 'SonarScannerLocal', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
             env.PATH = "${scannerHome}/bin:${env.PATH}"
+            sh """
+              sonar-scanner \
+                -Dsonar.projectKey=DevSecops_Project \
+                -Dsonar.sources=src \
+                -Dsonar.host.url=${SONAR_HOST_URL} \
+                -Dsonar.token=${SONAR_TOKEN} \
+                -Dsonar.projectVersion=1.0 \
+                -Dsonar.sourceEncoding=UTF-8 \
+                -Dsonar.language=js
+            """
           }
-          sh 'sonar-scanner'
         }
       }
     }
