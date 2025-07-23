@@ -1,0 +1,50 @@
+replicaCount: 1
+
+image:
+  repository: devsecops-nginx  # 👈 Local image name
+  tag: latest
+  pullPolicy: Never            # 👈 Use 'Never' since you're using a local image
+
+imagePullSecrets: []  # Add credentials here if you're using a private repo
+
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+
+podAnnotations: {}
+
+podLabels: {}
+
+podSecurityContext: {}
+
+securityContext: {}
+
+service:
+  type: NodePort
+  port: 80
+
+ingress:
+  enabled: false
+  annotations: {}
+  hosts:
+    - host: chart-example.local
+      paths: []
+  tls: []
+
+resources: {}
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
