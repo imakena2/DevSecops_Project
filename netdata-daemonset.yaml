@@ -1,0 +1,65 @@
+﻿apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: netdata
+  namespace: kube-system
+  labels:
+    app: netdata
+spec:
+  selector:
+    matchLabels:
+      name: netdata
+  template:
+    metadata:
+      labels:
+        name: netdata
+    spec:
+      hostPID: true
+      hostNetwork: true
+      containers:
+        - name: netdata
+          image: netdata/netdata:latest
+          securityContext:
+            privileged: true
+          ports:
+            - containerPort: 19999
+              name: http
+              protocol: TCP
+          volumeMounts:
+            - name: proc
+              mountPath: /host/proc
+              readOnly: true
+            - name: sys
+              mountPath: /host/sys
+              readOnly: true
+            - name: docker-socket
+              mountPath: /var/run/docker.sock
+            - name: etc-passwd
+              mountPath: /host/etc/passwd
+              readOnly: true
+            - name: etc-group
+              mountPath: /host/etc/group
+              readOnly: true
+          env:
+            - name: NETDATA_HOSTNAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+            - name: DOCKER_HOST
+              value: unix:///var/run/docker.sock
+      volumes:
+        - name: proc
+          hostPath:
+            path: /proc
+        - name: sys
+          hostPath:
+            path: /sys
+        - name: docker-socket
+          hostPath:
+            path: /var/run/docker.sock
+        - name: etc-passwd
+          hostPath:
+            path: /etc/passwd
+        - name: etc-group
+          hostPath:
+            path: /etc/group
