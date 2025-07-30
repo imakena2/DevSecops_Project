@@ -22,6 +22,7 @@ This project represents the final DevSecOps practical assessment, aimed at apply
 - Deploy the application via Helm on Kubernetes
 - Monitor the deployment using Netdata and CloudWatch
 - Perform UI testing using Selenium and Pytest
+- Track development progress using Jira
 - Ensure secure deployment using SSL certificates and security headers
 
 ---
@@ -33,6 +34,7 @@ This project represents the final DevSecOps practical assessment, aimed at apply
 - **VS Code**: Primary code editor
 - **PowerShell & Git Bash**: CLI tools
 - **GitHub**: Version control
+- **Jira**: Agile board and issue tracking
 
 ### Backend/Infrastructure:
 
@@ -109,6 +111,11 @@ This project represents the final DevSecOps practical assessment, aimed at apply
 - Captured screenshots on failure
 - Generated coverage reports
 
+11. **Project Management with Jira**
+
+- Tracked tasks, sprints, and progress
+- Used Jira boards for visualizing development workflow
+
 ---
 
 ## 5. Project Structure (VS Code)
@@ -158,6 +165,7 @@ DevSecOps_Project/
 - Monitored via Netdata (local) and CloudWatch (AWS)
 - Selenium test suite passed for UI workflows
 - SSL enabled and security headers configured
+- Tasks tracked using Jira board and issue logs
 
 ---
 
@@ -193,18 +201,62 @@ pytest test_app.py
 
 ## 9. Conclusion
 
-This project provided a comprehensive experience in implementing DevSecOps principles. Each phase from development to deployment, security, and testing was addressed, offering a strong foundation for modern software delivery pipelines. The use of both local and cloud environments illustrated the flexibility and power of containerized DevOps workflows.
+This project provided a comprehensive experience in implementing DevSecOps principles. Each phase from development to deployment, security, testing, and monitoring was addressed, offering a strong foundation for modern software delivery pipelines. The use of both local and cloud environments illustrated the flexibility and power of containerized DevOps workflows.
 
 ---
 
-## Author
+## 10. Author
 
 **Idah Makena Ncooro**\
 GitHub: [imakena2](https://github.com/imakena2)
 
 ---
 
-## License
+## 11. License
 
 MIT License
+
+---
+
+## Appendices
+
+### Appendix A: Phase 1 - Environment & Tools Setup
+
+- Installed VS Code, Git, Docker, Helm, and AWS CLI
+- Configured GitHub repo and local repo syncing
+- Initialized Jira for issue tracking
+
+### Appendix B: Phase 2 - App Development & Containerization
+
+- Developed frontend using React + Vite
+- Created Dockerfile with Nginx serving static files
+
+### Appendix C: Phase 3 - CI/CD with Jenkins
+
+- Dockerized Jenkins instance
+- Configured Jenkinsfile with build/test/deploy steps
+
+### Appendix D: Phase 4 - Code Quality & Testing
+
+- Integrated SonarQube for static analysis
+- Created `test_app.py` using Selenium and Pytest
+
+### Appendix E: Phase 5 - Kubernetes Deployment
+
+- Wrote Helm charts for deployment
+- Validated application via `kubectl get svc`
+
+### Appendix F: Phase 6 - Monitoring
+
+- Installed Netdata DaemonSet on Docker Desktop
+- Integrated AWS CloudWatch for EKS cluster
+
+### Appendix G: Phase 7 - Security
+
+- Applied SSL and security headers in Nginx config
+- Verified secure deployment via HTTPS and browser headers
+
+### Appendix H: Phase 8 - Project Management
+
+- Used Jira for sprint planning, backlog, and issue tracking
 
